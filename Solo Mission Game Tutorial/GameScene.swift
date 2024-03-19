@@ -51,4 +51,18 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         fireBullet()
     }
+    
+    // allows the ship to move left right
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch: AnyObject in touches {
+            let pointOfTouch = touch.location(in: self)
+            let previousPointOfTouch = touch.previousLocation(in: self)
+            
+            let amountDraggedforX = pointOfTouch.x - previousPointOfTouch.x
+            let amountDraggedforY = pointOfTouch.y - previousPointOfTouch.y
+            
+            player.position.x += amountDraggedforX
+            player.position.y += amountDraggedforY
+        }
+    }
 }
