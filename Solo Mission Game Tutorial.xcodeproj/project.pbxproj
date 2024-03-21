@@ -18,6 +18,7 @@
 		02FFD1442BA8C91F007CB952 /* Solo_Mission_Game_TutorialTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FFD1432BA8C91F007CB952 /* Solo_Mission_Game_TutorialTests.swift */; };
 		02FFD14E2BA8C91F007CB952 /* Solo_Mission_Game_TutorialUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FFD14D2BA8C91F007CB952 /* Solo_Mission_Game_TutorialUITests.swift */; };
 		02FFD1502BA8C91F007CB952 /* Solo_Mission_Game_TutorialUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FFD14F2BA8C91F007CB952 /* Solo_Mission_Game_TutorialUITestsLaunchTests.swift */; };
+		02FFD15D2BABB901007CB952 /* THE BOLD FONT - FREE VERSION - 2023.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02FFD15C2BABB901007CB952 /* THE BOLD FONT - FREE VERSION - 2023.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,8 @@
 		02FFD1492BA8C91F007CB952 /* Solo Mission Game TutorialUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Solo Mission Game TutorialUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02FFD14D2BA8C91F007CB952 /* Solo_Mission_Game_TutorialUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Solo_Mission_Game_TutorialUITests.swift; sourceTree = "<group>"; };
 		02FFD14F2BA8C91F007CB952 /* Solo_Mission_Game_TutorialUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Solo_Mission_Game_TutorialUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		02FFD15C2BABB901007CB952 /* THE BOLD FONT - FREE VERSION - 2023.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "THE BOLD FONT - FREE VERSION - 2023.ttf"; sourceTree = "<group>"; };
+		02FFD15E2BABBC60007CB952 /* Solo-Mission-Game-Tutorial-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Solo-Mission-Game-Tutorial-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,11 +105,13 @@
 		02FFD1282BA8C91D007CB952 /* Solo Mission Game Tutorial */ = {
 			isa = PBXGroup;
 			children = (
+				02FFD15E2BABBC60007CB952 /* Solo-Mission-Game-Tutorial-Info.plist */,
 				02FFD1292BA8C91D007CB952 /* AppDelegate.swift */,
 				02FFD12B2BA8C91D007CB952 /* GameScene.sks */,
 				02FFD12D2BA8C91D007CB952 /* Actions.sks */,
 				02FFD12F2BA8C91D007CB952 /* GameScene.swift */,
 				02FFD1312BA8C91D007CB952 /* GameViewController.swift */,
+				02FFD15C2BABB901007CB952 /* THE BOLD FONT - FREE VERSION - 2023.ttf */,
 				02FFD1332BA8C91D007CB952 /* Main.storyboard */,
 				02FFD1362BA8C91F007CB952 /* Assets.xcassets */,
 				02FFD1382BA8C91F007CB952 /* LaunchScreen.storyboard */,
@@ -240,6 +245,7 @@
 				02FFD1372BA8C91F007CB952 /* Assets.xcassets in Resources */,
 				02FFD13A2BA8C91F007CB952 /* LaunchScreen.storyboard in Resources */,
 				02FFD12E2BA8C91D007CB952 /* Actions.sks in Resources */,
+				02FFD15D2BABB901007CB952 /* THE BOLD FONT - FREE VERSION - 2023.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,6 +455,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Solo-Mission-Game-Tutorial-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -478,6 +485,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Solo-Mission-Game-Tutorial-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
