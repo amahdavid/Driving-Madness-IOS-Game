@@ -8,19 +8,24 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     // sets the player image
     let player = SKSpriteNode(imageNamed: "playerCar")
     
+    struct PhysicsCategories {
+        static let None : UInt32 = 0
+        static let Player : UInt32 = 0b1 // 1
+        static let Bullet : UInt32 = 0b10 // 2
+        static let Enemy : UInt32 = 0b100 // 4
+    }
+    
     func random() -> CGFloat {
-        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+        return CGFloat(Float(arc4random()) / Float(0xFFFFFFFF))
     }
     
     func random(min:CGFloat, max: CGFloat) -> CGFloat {
         return random() * (max - min) + min
     }
-    
-    
     
     let gameArea: CGRect
     override init(size: CGSize) {
@@ -41,6 +46,8 @@ class GameScene: SKScene {
     
     // this function runs as soon as the scene loads up
     override func didMove(to view: SKView) {
+        self.physicsWorld.contactDelegate = self
+        
         // sets the background image
         let background = SKSpriteNode(imageNamed: "RoadBackGround")
         // sets the background size to the scene size
@@ -53,14 +60,80 @@ class GameScene: SKScene {
         self.addChild(background)
         
         // how big the ship will be, 1 being normal, 2 being huge
-        player.setScale(0.5)
+        player.setScale(0.3)
         player.position = CGPoint(x: self.size.width / 2, y: self.size.height * 0.2)
         player.zPosition = 2
-        self.addChild(player)
+        player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
         
+        player.physicsBody!.affectedByGravity = false
+        player.physicsBody!.categoryBitMask = PhysicsCategories.Player
+        player.physicsBody!.collisionBitMask = PhysicsCategories.None
+        player.physicsBody!.contactTestBitMask = PhysicsCategories.Enemy
+        
+        self.addChild(player)
         startNewLevel()
     }
     
+    // holds the information of which objects have made contact
+    func didBegin(_ contact: SKPhysicsContact) {
+        var body1 = SKPhysicsBody()
+        var body2 = SKPhysicsBody()
+        
+        // grabbing the category number of both bodies
+        // whichever body has the lower category number should be body 1
+        // whichever has the higher number then it should be body 2
+        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+            body1 = contact.bodyA
+            body2 = contact.bodyB
+        }
+        else {
+            body1 = contact.bodyB
+            body2 = contact.bodyA
+        }
+        
+        // if the player has hit the enemy
+        if body1.categoryBitMask == PhysicsCategories.Player && body2.categoryBitMask == PhysicsCategories.Enemy {
+            
+            if body1.node != nil {spawnExplosion(spawnPosition: body1.node!.position)}
+            
+            if body2.node != nil {spawnExplosion(spawnPosition: body2.node!.position)}
+            
+            body1.node?.removeFromParent()
+            body2.node?.removeFromParent()
+        }
+        
+        // if the bullet has hit the enemy
+        if body1.categoryBitMask == PhysicsCategories.Bullet 
+            && body2.categoryBitMask == PhysicsCategories.Enemy
+        {
+            if body2.node != nil {
+                if body2.node!.position.y > self.size.height {
+                    return
+                }
+                else {
+                    spawnExplosion(spawnPosition: body2.node!.position)
+                }
+            }
+            body1.node?.removeFromParent()
+            body2.node?.removeFromParent()
+        }
+    }
+    
+    func spawnExplosion (spawnPosition: CGPoint) {
+        let explosion = SKSpriteNode(imageNamed: "explosion")
+        explosion.position = spawnPosition
+        explosion.zPosition = 3
+        explosion.setScale(0)
+        self.addChild(explosion)
+        
+        let scaleIn = SKAction.scale(to: 1.5, duration: 0.1)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.1)
+        let delete = SKAction.removeFromParent()
+        
+        let explosionSequence = SKAction.sequence([scaleIn, fadeOut, delete])
+        explosion.run(explosionSequence)
+    }
+
     func startNewLevel(){
         let spawn = SKAction.run(spawnEnemy)
         let waitToSpawn = SKAction.wait(forDuration: 1)
@@ -74,12 +147,17 @@ class GameScene: SKScene {
         bullet.setScale(1)
         bullet.position = player.position
         bullet.zPosition = 1
+        bullet.physicsBody = SKPhysicsBody(rectangleOf: bullet.size)
+        
+        bullet.physicsBody!.affectedByGravity = false
+        bullet.physicsBody!.categoryBitMask = PhysicsCategories.Bullet
+        bullet.physicsBody!.collisionBitMask = PhysicsCategories.None
+        bullet.physicsBody!.contactTestBitMask = PhysicsCategories.Enemy
+        
         self.addChild(bullet)
         
         let moveBullet = SKAction.moveTo(y: self.size.height + bullet.size.height, duration: 1)
         let deleteBullet = SKAction.removeFromParent()
-        // sets the sequence of how things should happen
-        // once you shot the bullet delete it after
         let bulletSequence = SKAction.sequence([moveBullet, deleteBullet])
         bullet.run(bulletSequence)
     }
@@ -92,9 +170,16 @@ class GameScene: SKScene {
         let endPoint = CGPoint(x: randomXEnd, y: -self.size.height * 0.2)
         
         let enemy = SKSpriteNode(imageNamed: "policeCar")
-        enemy.setScale(1)
+        enemy.setScale(0.6)
         enemy.position = startPoint
         enemy.zPosition = 2
+        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
+        
+        enemy.physicsBody!.affectedByGravity = false
+        enemy.physicsBody!.categoryBitMask = PhysicsCategories.Enemy
+        enemy.physicsBody!.collisionBitMask = PhysicsCategories.None
+        enemy.physicsBody!.contactTestBitMask = PhysicsCategories.Player | PhysicsCategories.Bullet
+        
         self.addChild(enemy)
         
         let moveEnemy = SKAction.move(to: endPoint, duration: 1.5)
@@ -108,12 +193,11 @@ class GameScene: SKScene {
         enemy.zRotation = amountToRotate
     }
     
-    // when we touch the screen, fire a bullet
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         fireBullet()
     }
     
-    // allows the ship to move left right
+    // allows the ship to move horizontally and vertically
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             let pointOfTouch = touch.location(in: self)
