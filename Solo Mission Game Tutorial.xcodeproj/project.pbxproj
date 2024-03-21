@@ -19,6 +19,9 @@
 		02FFD14E2BA8C91F007CB952 /* Solo_Mission_Game_TutorialUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FFD14D2BA8C91F007CB952 /* Solo_Mission_Game_TutorialUITests.swift */; };
 		02FFD1502BA8C91F007CB952 /* Solo_Mission_Game_TutorialUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FFD14F2BA8C91F007CB952 /* Solo_Mission_Game_TutorialUITestsLaunchTests.swift */; };
 		02FFD15D2BABB901007CB952 /* THE BOLD FONT - FREE VERSION - 2023.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02FFD15C2BABB901007CB952 /* THE BOLD FONT - FREE VERSION - 2023.ttf */; };
+		02FFD1642BABD583007CB952 /* explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 02FFD1632BABD583007CB952 /* explosion.wav */; };
+		02FFD1662BABD58A007CB952 /* gameTheme.wav in Resources */ = {isa = PBXBuildFile; fileRef = 02FFD1652BABD58A007CB952 /* gameTheme.wav */; };
+		02FFD1682BABD834007CB952 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FFD1672BABD834007CB952 /* GameOverScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,9 @@
 		02FFD14F2BA8C91F007CB952 /* Solo_Mission_Game_TutorialUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Solo_Mission_Game_TutorialUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		02FFD15C2BABB901007CB952 /* THE BOLD FONT - FREE VERSION - 2023.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "THE BOLD FONT - FREE VERSION - 2023.ttf"; sourceTree = "<group>"; };
 		02FFD15E2BABBC60007CB952 /* Solo-Mission-Game-Tutorial-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Solo-Mission-Game-Tutorial-Info.plist"; sourceTree = SOURCE_ROOT; };
+		02FFD1632BABD583007CB952 /* explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion.wav; sourceTree = "<group>"; };
+		02FFD1652BABD58A007CB952 /* gameTheme.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gameTheme.wav; sourceTree = "<group>"; };
+		02FFD1672BABD834007CB952 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +116,10 @@
 				02FFD12B2BA8C91D007CB952 /* GameScene.sks */,
 				02FFD12D2BA8C91D007CB952 /* Actions.sks */,
 				02FFD12F2BA8C91D007CB952 /* GameScene.swift */,
+				02FFD1672BABD834007CB952 /* GameOverScene.swift */,
 				02FFD1312BA8C91D007CB952 /* GameViewController.swift */,
+				02FFD1652BABD58A007CB952 /* gameTheme.wav */,
+				02FFD1632BABD583007CB952 /* explosion.wav */,
 				02FFD15C2BABB901007CB952 /* THE BOLD FONT - FREE VERSION - 2023.ttf */,
 				02FFD1332BA8C91D007CB952 /* Main.storyboard */,
 				02FFD1362BA8C91F007CB952 /* Assets.xcassets */,
@@ -242,9 +251,11 @@
 			files = (
 				02FFD1352BA8C91D007CB952 /* Main.storyboard in Resources */,
 				02FFD12C2BA8C91D007CB952 /* GameScene.sks in Resources */,
+				02FFD1642BABD583007CB952 /* explosion.wav in Resources */,
 				02FFD1372BA8C91F007CB952 /* Assets.xcassets in Resources */,
 				02FFD13A2BA8C91F007CB952 /* LaunchScreen.storyboard in Resources */,
 				02FFD12E2BA8C91D007CB952 /* Actions.sks in Resources */,
+				02FFD1662BABD58A007CB952 /* gameTheme.wav in Resources */,
 				02FFD15D2BABB901007CB952 /* THE BOLD FONT - FREE VERSION - 2023.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,6 +283,7 @@
 			files = (
 				02FFD1302BA8C91D007CB952 /* GameScene.swift in Sources */,
 				02FFD1322BA8C91D007CB952 /* GameViewController.swift in Sources */,
+				02FFD1682BABD834007CB952 /* GameOverScene.swift in Sources */,
 				02FFD12A2BA8C91D007CB952 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
