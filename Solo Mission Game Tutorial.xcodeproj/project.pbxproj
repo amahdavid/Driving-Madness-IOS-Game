@@ -22,6 +22,7 @@
 		02FFD1642BABD583007CB952 /* explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 02FFD1632BABD583007CB952 /* explosion.wav */; };
 		02FFD1662BABD58A007CB952 /* gameTheme.wav in Resources */ = {isa = PBXBuildFile; fileRef = 02FFD1652BABD58A007CB952 /* gameTheme.wav */; };
 		02FFD1682BABD834007CB952 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FFD1672BABD834007CB952 /* GameOverScene.swift */; };
+		02FFD16A2BAD240F007CB952 /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FFD1692BAD240F007CB952 /* MainMenuScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		02FFD1632BABD583007CB952 /* explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion.wav; sourceTree = "<group>"; };
 		02FFD1652BABD58A007CB952 /* gameTheme.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gameTheme.wav; sourceTree = "<group>"; };
 		02FFD1672BABD834007CB952 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
+		02FFD1692BAD240F007CB952 /* MainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				02FFD12B2BA8C91D007CB952 /* GameScene.sks */,
 				02FFD12D2BA8C91D007CB952 /* Actions.sks */,
 				02FFD12F2BA8C91D007CB952 /* GameScene.swift */,
+				02FFD1692BAD240F007CB952 /* MainMenuScene.swift */,
 				02FFD1672BABD834007CB952 /* GameOverScene.swift */,
 				02FFD1312BA8C91D007CB952 /* GameViewController.swift */,
 				02FFD1652BABD58A007CB952 /* gameTheme.wav */,
@@ -281,6 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02FFD16A2BAD240F007CB952 /* MainMenuScene.swift in Sources */,
 				02FFD1302BA8C91D007CB952 /* GameScene.swift in Sources */,
 				02FFD1322BA8C91D007CB952 /* GameViewController.swift in Sources */,
 				02FFD1682BABD834007CB952 /* GameOverScene.swift in Sources */,

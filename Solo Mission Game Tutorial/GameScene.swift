@@ -11,14 +11,17 @@ var gameScore = 0
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    let startLabel = SKLabelNode(fontNamed: "THE BOLD FONT")
     let scoreLabel = SKLabelNode(fontNamed: "THE BOLD FONT")
     
     var livesNumber = 5
     let livesLabel = SKLabelNode(fontNamed: "THE BOLD FONT")
     
     let explosionSound = SKAction.playSoundFileNamed("explosion.wav", waitForCompletion: false)
-    let themeSong = SKAction.playSoundFileNamed("gameTheme", waitForCompletion: true)
-    var backgroundMusic: SKAudioNode!
+    
+    var lastUpdateTime: TimeInterval = 0
+    var deltaFrameTime: TimeInterval = 0
+    var amountToMovePerSecond: CGFloat = 600.0
     
     var level = 0
     enum gameState {
@@ -27,8 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case afterGame
     }
     
-    var currentGameState = gameState.inGame
-    
+    var currentGameState = gameState.preGame
     // sets the player image
     let player = SKSpriteNode(imageNamed: "playerCar")
     
@@ -68,19 +70,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         self.physicsWorld.contactDelegate = self
         gameScore = 0
-        // sets the background image
-        let background = SKSpriteNode(imageNamed: "RoadBackGround")
-        background.size = self.size
-        background.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
-        background.zPosition = 0
-        self.addChild(background)
+        
+        for i in 0...1 {
+            // sets the background image
+            let background = SKSpriteNode(imageNamed: "RoadBackGround")
+            background.size = self.size
+            background.anchorPoint = CGPoint(x: 0.5, y: 0)
+            
+            // 2 backgrounds to overlap on each other
+            background.position = CGPoint(
+                x: self.size.width / 2, 
+                y: self.size.height * CGFloat(i)
+            )
+            
+            background.zPosition = 0
+            background.name = "Background"
+            self.addChild(background)
+        }
         
         // how big the ship will be, 1 being normal, 2 being huge
         player.setScale(0.3)
-        player.position = CGPoint(x: self.size.width / 2, y: self.size.height * 0.2)
+        player.position = CGPoint(x: self.size.width / 2, y: -player.size.height)
         player.zPosition = 2
         player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
-        
         player.physicsBody!.affectedByGravity = false
         player.physicsBody!.categoryBitMask = PhysicsCategories.Player
         player.physicsBody!.collisionBitMask = PhysicsCategories.None
@@ -92,22 +104,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.fontSize = 70
         scoreLabel.fontColor = SKColor.white
         scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        scoreLabel.position = CGPoint(x: self.size.width * 0.20, y: self.size.height * 0.9)
+        scoreLabel.position = CGPoint(x: self.size.width * 0.20, y: self.size.height + scoreLabel.frame.size.height)
         scoreLabel.zPosition = 100
-        
         self.addChild(scoreLabel)
         
         livesLabel.text = "Lives: 3"
         livesLabel.fontSize = 70
         livesLabel.fontColor = SKColor.white
         livesLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
-        livesLabel.position = CGPoint(x: self.size.width * 0.80, y: self.size.height * 0.9)
+        livesLabel.position = CGPoint(x: self.size.width * 0.80, y: self.size.height + livesLabel.frame.size.height)
         livesLabel.zPosition = 100
-        
         self.addChild(livesLabel)
-
         
-        startNewLevel()
+        let moveOnToScreenAction = SKAction.moveTo(y: self.size.height * 0.9, duration: 0.3)
+        scoreLabel.run(moveOnToScreenAction)
+        livesLabel.run(moveOnToScreenAction)
+        
+        startLabel.text = "Tap To Start"
+        startLabel.fontSize = 100
+        startLabel.fontColor = SKColor.white
+        startLabel.zPosition = 1
+        startLabel.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        startLabel.alpha = 0
+        self.addChild(startLabel)
+        
+        let fadeInAction = SKAction.fadeIn(withDuration: 0.3)
+        startLabel.run(fadeInAction)
+    }
+    
+    func startGame() {
+        currentGameState = gameState.inGame
+        let fadeOutAction = SKAction.fadeOut(withDuration: 0.5)
+        let deleteAction = SKAction.removeFromParent()
+        let deleteSequence = SKAction.sequence([fadeOutAction, deleteAction])
+        startLabel.run(deleteSequence)
+        
+        let moveShipOntoScreen = SKAction.moveTo(y: self.size.height * 0.2, duration: 0.5)
+        let startLevel = SKAction.run(startNewLevel)
+        let startGameSequence = SKAction.sequence([moveShipOntoScreen, startLevel])
+        player.run(startGameSequence)
     }
     
     func addScore() {
@@ -214,7 +249,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let fadeOut = SKAction.fadeOut(withDuration: 0.1)
         let delete = SKAction.removeFromParent()
         
-        let explosionSequence = SKAction.sequence([scaleIn, fadeOut, delete])
+        let explosionSequence = SKAction.sequence([explosionSound, scaleIn, fadeOut, delete])
         explosion.run(explosionSequence)
     }
 
@@ -231,7 +266,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case 2: spawingDuration = 0.9
         case 3: spawingDuration = 0.5
         case 4: spawingDuration = 0.2
-            
         default:
             spawingDuration = 0.5
             print("Cannot find level info")
@@ -300,7 +334,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if currentGameState == gameState.inGame { fireBullet() }
+        if currentGameState == gameState.preGame { startGame() }
+        else if currentGameState == gameState.inGame { fireBullet() }
     }
     
     // allows the ship to move horizontally and vertically
@@ -329,6 +364,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 player.position.y = gameArea.maxY
             } else if player.position.y < gameArea.minY {
                 player.position.y = gameArea.minY
+            }
+        }
+    }
+    
+    // runs once per game frame, used to move the background by moving it a tiny amount
+    // to move our background a good amount we need to know how the time
+    // gives the illusion for an endless scrolling
+    override func update(_ currentTime: TimeInterval) {
+        if lastUpdateTime == 0 {
+            lastUpdateTime = currentTime
+        } else {
+            deltaFrameTime = currentTime - lastUpdateTime
+            lastUpdateTime = currentTime
+        }
+        
+        let amountToMoveBackground = amountToMovePerSecond * CGFloat(deltaFrameTime)
+        self.enumerateChildNodes(withName: "Background") {
+            background, stop in
+            
+            background.position.y -= amountToMoveBackground
+            
+            if background.position.y < -self.size.height {
+                background.position.y += self.size.height * 2
             }
         }
     }
