@@ -17,5 +17,8 @@ To get started, you must have Xcode installed
 <img src="https://github.com/amahdavid/Solo-Mission-Game-Tutorial/assets/78812828/89e01050-a571-4076-ab2c-13fab27ebee4" alt="InGame" width="200">
 <img src="https://github.com/amahdavid/Solo-Mission-Game-Tutorial/assets/78812828/c5b22a78-e7f6-4cea-8c2b-ac07e0d6ceeb" alt="GameOver" width="200">
 
-The YouTube video link is https://youtube.com/playlist?list=PLrL5aCF7Ods-6C7QjzXibUZoYjMzhWBfL&si=8mPGA7YYVmZqi_IZ
-All credits go to the YouTuber who made this (Matt Heaney)
+
+# CREDITS
+https://www.youtube.com/@MattHeaneyApps/videos
+
+https://pixabay.com/sound-effects/search/explosion%20sound/
