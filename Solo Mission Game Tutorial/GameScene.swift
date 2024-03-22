@@ -14,7 +14,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let startLabel = SKLabelNode(fontNamed: "THE BOLD FONT")
     let scoreLabel = SKLabelNode(fontNamed: "THE BOLD FONT")
     
-    var livesNumber = 5
+    var livesNumber = 3
     let livesLabel = SKLabelNode(fontNamed: "THE BOLD FONT")
     
     let explosionSound = SKAction.playSoundFileNamed("explosion.wav", waitForCompletion: false)
@@ -108,7 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.zPosition = 100
         self.addChild(scoreLabel)
         
-        livesLabel.text = "Lives: 3"
+        livesLabel.text = "Lives: \(livesNumber)"
         livesLabel.fontSize = 70
         livesLabel.fontColor = SKColor.white
         livesLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
