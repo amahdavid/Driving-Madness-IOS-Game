@@ -19,6 +19,4 @@ To get started, you must have Xcode installed
 
 
 # CREDITS
-https://www.youtube.com/@MattHeaneyApps/videos
-
 https://pixabay.com/sound-effects/search/explosion%20sound/
